@@ -1,0 +1,83 @@
+<div class="text-center">
+  <h1 class="mt-4">Álbuns</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">Consulta</li>
+  </ol>
+</div>
+
+<div class="container">
+  <form #consultaForm="ngForm" (submit)="consultar()">
+    <br/>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <label for="selectBanda">Banda:</label>
+        <select [(ngModel)]="selectedBandaId" name="banda" id="selectBanda" class="form-control">
+          <option [ngValue]="null">Selecione...</option>
+          <option *ngFor="let banda of bandas" [ngValue]="banda.id">{{ banda.nome }}</option>
+        </select>
+      </div>
+    </div>
+    <br/>
+    <div class="row justify-content-center">
+      <div class="col-md-3 d-flex flex-column flex-md-row">
+        <button type="submit" class="btn btn-primary mr-md-2 mb-2 mb-md-0">
+          <i class="fa fa-search"></i> Consultar
+        </button>
+        <button type="button" routerLink="/album-cadastro" class="btn btn-warning">
+          <i class="fa fa-plus"></i> Novo
+        </button>
+      </div>
+    </div>
+  </form>
+  <br/>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div *ngIf="message" class="alert alert-info text-center">
+        {{ message }}
+      </div>
+      <table class="table table-condensed table-hover" *ngIf="albuns.length > 0">
+        <thead>
+        <tr>
+          <th (click)="toggleSort('nome')">Nome do Álbum <span>{{ sortDirection.nome === 'asc' ? '▲' : '▼' }}</span></th>
+          <th>Resumo</th>
+          <th (click)="toggleSort('media')">Média <span>{{ sortDirection.media === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="toggleSort('duracaoTotal')">Duração Total <span>{{ sortDirection.duracaoTotal === 'asc' ? '▲' : '▼' }}</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let album of albuns">
+          <td>{{ album.nome }}</td>
+          <td>{{ album.resumo }}</td>
+          <td>{{ album.media.toFixed(2) }}</td>
+          <td>{{ convertToHoursMinutesSeconds(album.duracaoTotal) }}</td>
+          <td>
+            <button class="btn btn-primary" routerLink="/album-cadastro/{{ album.id }}">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="preparaDelecao(album)" data-toggle="modal" data-target=".modalDelecao">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modalDelecao" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Confirmação</h4>
+      </div>
+      <div class="modal-body" *ngIf="albumSelecionado">
+        Confirma a deleção do Álbum {{ albumSelecionado.nome }}?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="deletarAlbum()" data-dismiss="modal">Confirmar</button>
+        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="text-center">
+  <h1 class="mt-4">Músicas</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">Consulta</li>
+  </ol>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+<!--      <div class="alert alert-danger" *ngIf="mensagemErro">-->
+<!--        {{ mensagemErro }}-->
+<!--      </div>-->
+    </div>
+  </div>
+
+  <form #consultaForm="ngForm" (submit)="consultar()">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <label for="banda">Filtrar por Banda:</label>
+        <select id="banda" class="form-control" [(ngModel)]="selectedBandaId" [ngModelOptions]="{standalone: true}" (change)="onBandaChange()">
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let banda of bandas" [ngValue]="banda.id">{{ banda.nome }}</option>
+        </select>
+      </div>
+      <div class="col-md-6" *ngIf="selectedBandaId">
+        <label for="album">Filtrar por Álbum:</label>
+        <select id="album" class="form-control" [(ngModel)]="selectedAlbumId" [ngModelOptions]="{standalone: true}" (change)="onAlbumChange()">
+          <option [ngValue]="null">Todos</option>
+          <option *ngFor="let album of albuns" [ngValue]="album.id">{{ album.nome }}</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <br/>
+
+  <div *ngIf="mensagemErro" class="alert alert-warning">
+    {{ mensagemErro }}
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th (click)="toggleSort('nome')">
+            Nome <span>{{ sortDirection['nome'] === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th>Resumo</th>
+          <th (click)="toggleSort('duracao')">
+            Duração <span>{{ sortDirection['duracao'] === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="toggleSort('media')">
+            Média <span>{{ sortDirection['media'] === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let m of musicas">
+          <td>{{ m.nome }}</td>
+          <td>{{ m.resumo }}</td>
+          <td>{{ convertToHoursMinutesSeconds(m.duracao) }}</td>
+          <td>{{ m.media.toFixed(2) }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="editarMusica(m)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="preparaDelecao(m)" data-toggle="modal" data-target=".modalDelecao">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modalDelecao" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Confirmação</h4>
+      </div>
+      <div class="modal-body" *ngIf="musicaSelecionada">
+        Confirma a deleção da Música {{ musicaSelecionada.nome }}?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="deletarMusica()" data-dismiss="modal">Confirmar</button>
+        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

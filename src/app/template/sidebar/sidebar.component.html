@@ -1,0 +1,62 @@
+<div id="layoutSidenav_nav">
+  <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+      <div class="nav">
+
+        <div class="sb-sidenav-menu-heading">Sistema</div>
+        <a class="nav-link" routerLink="/home">
+          <div class="sb-nav-link-icon">
+            <i class="fas fa-tachometer-alt"></i>
+          </div>
+          Home
+        </a>
+
+        <div class="sb-sidenav-menu-heading">Interface</div>
+        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseLayoutsBanda" aria-expanded="false" aria-controls="collapseLayoutsBanda">
+          <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+          Bandas
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapseLayoutsBanda" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" routerLink="/banda-cadastro">Cadastrar</a>
+            <a class="nav-link" routerLink="/banda-nota">Avaliar</a>
+            <a class="nav-link" routerLink="/banda-lista">Listar</a>
+          </nav>
+        </div>
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsAlbum" aria-expanded="false" aria-controls="collapseLayoutsAlbum">
+          <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+          Álbuns
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapseLayoutsAlbum" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" routerLink="/album-cadastro">Cadastrar</a>
+            <a class="nav-link" routerLink="/album-nota">Avaliar</a>
+            <a class="nav-link" routerLink="/album-lista">Listar</a>
+          </nav>
+        </div>
+
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsMusica" aria-expanded="false" aria-controls="collapseLayoutsMusica">
+          <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+          Músicas
+          <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapseLayoutsMusica" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" routerLink="/musica-cadastro">Cadastrar</a>
+            <a class="nav-link" routerLink="/musica-nota">Avaliar</a>
+            <a class="nav-link" routerLink="/musica-lista">Listar</a>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sb-sidenav-footer">
+      <div class="small">Logged in as:</div>
+      Start Bootstrap
+    </div>
+  </nav>
+</div>

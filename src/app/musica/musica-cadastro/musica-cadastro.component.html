@@ -1,0 +1,100 @@
+<div class="text-center">
+  <h1 class="mt-4">Música</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">{{ isEdit ? 'Edição' : 'Cadastro' }}</li>
+  </ol>
+</div>
+
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success" *ngIf="success">
+          Música {{ musica.nome }} cadastrada/atualizada com sucesso!
+        </div>
+        <div class="alert alert-danger" *ngFor="let erro of errors">
+          {{ erro }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="banda">Banda: </label>
+          <select id="banda" class="form-control"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="selectedBandaId"
+                  (change)="onBandaChange()">
+            <option [ngValue]="null">Selecione...</option>
+            <option *ngFor="let banda of bandas"
+                    [ngValue]="banda.id">{{ banda.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="selectedBandaId">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="album">Álbum: </label>
+          <select id="album" class="form-control"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="musica.albumId">
+            <option [ngValue]="null">Selecione...</option>
+            <option *ngFor="let album of albuns"
+                    [ngValue]="album.id">{{ album.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nome">Nome: *</label>
+          <input id="nome" class="form-control" type="text"
+                 [(ngModel)]="musica.nome" name="nome" required />
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="resumo">Resumo: *</label>
+          <textarea id="resumo" class="form-control" rows="5"
+                    [(ngModel)]="musica.resumo" name="resumo" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="duracao">Duração em segundos: *</label>
+          <input id="duracao" class="form-control" type="text"
+                 [(ngModel)]="musica.duracao" name="duracao" required />
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6 d-flex justify-content-center">
+        <button type="submit" class="btn btn-success mr-2" *ngIf="!isEdit">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="submit" class="btn btn-primary mr-2" *ngIf="isEdit">
+          <i class="fas fa-sync-alt"></i> Atualizar
+        </button>
+        <button type="button" class="btn btn-danger" routerLink="/musica-lista">
+          <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

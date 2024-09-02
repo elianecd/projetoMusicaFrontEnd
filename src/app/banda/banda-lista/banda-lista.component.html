@@ -1,0 +1,89 @@
+<div class="text-center">
+  <h1 class="mt-4">Bandas</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">Consulta</li>
+  </ol>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+      <div class="alert alert-danger" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <button class="btn btn-warning" (click)="novoCadastro()">
+        <i class="fa fa-plus"></i>   Novo
+      </button>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div *ngIf="bandas.length === 0" class="alert alert-info text-center">
+        Nenhuma banda registrada.
+      </div>
+
+      <div *ngIf="bandas.length > 0">
+        <table class="table table-condensed table-hover">
+          <thead>
+          <tr>
+            <th>ID <span (click)="toggleSort('id')">{{ sortDirection.id === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Nome <span (click)="toggleSort('nome')">{{ sortDirection.nome === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Resumo</th>
+            <th>Avaliação <span (click)="toggleSort('media')">{{ sortDirection.media === 'asc' ? '▲' : '▼' }}</span></th>
+            <th></th> <!-- Ações -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let banda of bandas">
+            <td>{{ banda.id }}</td>
+            <td>{{ banda.nome }}</td>
+            <td>{{ banda.resumo }}</td>
+            <td>{{ banda.media.toFixed(2) }}</td>
+            <td>
+              <button class="btn btn-primary" routerLink="/banda-cadastro/{{ banda.id }}">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-danger" (click)="preparaDelecao(banda)" data-toggle="modal" data-target=".modalDelecao">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade modalDelecao" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Confirmação</h4>
+        </div>
+        <div class="modal-body" *ngIf="bandaSelecionada">
+          Confirma a deleção da Banda {{ bandaSelecionada.nome }}?
+        </div>
+        <div class="modal-footer">
+<!--          aqui eu chamo a funcao deletarBanda que existe no meu component.ts-->
+          <button class="btn btn-success" (click)="deletarBanda()" data-dismiss="modal">Confirmar</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

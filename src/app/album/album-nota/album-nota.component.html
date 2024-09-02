@@ -1,0 +1,98 @@
+<div class="text-center">
+  <h1 class="mt-4">Álbum</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">Avaliação</li>
+  </ol>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+      <div class="alert alert-danger" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <label for="selectBanda">Banda:</label>
+      <select [(ngModel)]="selectedBandaId" name="banda" id="selectBanda" class="form-control" (change)="onBandaChange()">
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let banda of bandas" [ngValue]="banda.id">{{ banda.nome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center" *ngIf="selectedBandaId !== null">
+    <div class="col-md-6">
+      <label for="selectAlbum">Álbum:</label>
+      <select [(ngModel)]="selectedAlbumId" name="album" id="selectAlbum" class="form-control">
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let album of albuns" [ngValue]="album.id">{{ album.nome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center" *ngIf="selectedBandaId !== null">
+    <div class="col-md-6">
+      <label for="notaInput">Nota:</label>
+      <input type="number" [(ngModel)]="nota" min="1" max="10" placeholder="Nota (1-10)" class="form-control" id="notaInput" />
+    </div>
+  </div>
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <button class="btn btn-success" (click)="avaliarAlbum()">Avaliar</button>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+<!--      <div *ngIf="albuns.length === 0" class="alert alert-info text-center">-->
+<!--        Nenhum álbum registrado.-->
+<!--      </div>-->
+
+      <div *ngIf="albuns.length > 0">
+        <table class="table table-condensed table-hover">
+          <thead>
+          <tr>
+            <th>ID <span (click)="toggleSort('id')">{{ sortDirection.id === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Nome <span (click)="toggleSort('nome')">{{ sortDirection.nome === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Resumo</th>
+            <th>Duração Total</th>
+            <th>Avaliação <span (click)="toggleSort('media')">{{ sortDirection.media === 'asc' ? '▲' : '▼' }}</span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let album of albuns">
+            <td>{{ album.id }}</td>
+            <td>{{ album.nome }}</td>
+            <td>{{ album.resumo }}</td>
+            <td>{{ convertToHoursMinutesSeconds(album.duracaoTotal) }}</td>
+            <td>
+              <span *ngIf="album.media === null || album.media === 0">Ainda não há nenhuma avaliação para este álbum.</span>
+              <span *ngIf="album.media !== null && album.media !== 0">{{ album.media.toFixed(2) }}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>

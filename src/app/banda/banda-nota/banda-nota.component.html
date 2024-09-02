@@ -1,0 +1,85 @@
+<div class="text-center">
+  <h1 class="mt-4">Banda</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">Avaliação</li>
+  </ol>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+      <div class="alert alert-danger" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <label for="selectBanda">Banda:</label>
+      <select [(ngModel)]="selectedBandaId" name="banda" id="selectBanda" class="form-control">
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let banda of bandas" [ngValue]="banda.id">{{ banda.nome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <label for="notaInput">Nota:</label>
+      <input type="number" [(ngModel)]="nota" min="1" max="10" placeholder="Nota (1-10)" class="form-control" id="notaInput" />
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <button class="btn btn-success" (click)="avaliarBanda()">Avaliar</button>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="bandas.length === 0" class="alert alert-info text-center">
+        Nenhuma banda registrada.
+      </div>
+
+      <div *ngIf="bandas.length > 0">
+        <table class="table table-condensed table-hover">
+          <thead>
+          <tr>
+            <th>ID <span (click)="toggleSort('id')">{{ sortDirection['id'] === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Nome <span (click)="toggleSort('nome')">{{ sortDirection['nome'] === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Resumo</th>
+            <th>Avaliação <span (click)="toggleSort('media')">{{ sortDirection['media'] === 'asc' ? '▲' : '▼' }}</span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let banda of bandas">
+            <td>{{ banda.id }}</td>
+            <td>{{ banda.nome }}</td>
+            <td>{{ banda.resumo }}</td>
+            <td>
+              <span *ngIf="banda.media === null || banda.media === 0">Ainda não há nenhuma avaliação para esta banda.</span>
+              <span *ngIf="banda.media !== null && banda.media !== 0">{{ banda.media.toFixed(2) }}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,83 @@
+<div class="text-center">
+  <h1 class="mt-4">Álbum</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">{{ album.id ? 'Edição' : 'Cadastro' }}</li>
+  </ol>
+</div>
+
+<div class="container">
+  <form #form="ngForm" (submit)="onSubmit()">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success" *ngIf="success">
+          Álbum {{ album.nome }} cadastrado/atualizado com sucesso!
+        </div>
+        <div class="alert alert-danger" *ngFor="let erro of errors">
+          {{ erro }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="banda">Banda: </label>
+          <select id="banda" class="form-control"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="album.idBanda">
+            <option value="null">Selecione...</option>
+            <option *ngFor="let banda of bandas"
+                    [ngValue]="banda.id">{{ banda.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="album.id">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="id">ID:</label>
+          <input id="id" class="form-control" type="text" disabled="true"
+                 [(ngModel)]="album.id" name="id"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nome">Nome: *</label>
+          <input id="nome" class="form-control" type="text"
+                 [(ngModel)]="album.nome" name="nome" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="resumo">Resumo: *</label>
+          <textarea id="resumo" class="form-control" rows="5"
+                    [(ngModel)]="album.resumo" name="resumo"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6 d-flex justify-content-center">
+        <button type="submit" class="btn btn-success mr-2" *ngIf="!album.id">
+          <i class="fa fa-save"></i> Salvar
+        </button>
+        <button type="submit" class="btn btn-primary mr-2" *ngIf="album.id">
+          <i class="fas fa-sync-alt"></i> Atualizar
+        </button>
+        <button type="button" routerLink="/album-lista" class="btn btn-danger">
+          <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

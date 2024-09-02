@@ -1,0 +1,105 @@
+<div class="text-center">
+  <h1 class="mt-4">Música</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">Avaliação</li>
+  </ol>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+      <div class="alert alert-danger" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <label for="selectBanda">Banda:</label>
+      <select [(ngModel)]="selectedBandaId" name="banda" id="selectBanda" class="form-control" (change)="onBandaChange()">
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let banda of bandas" [ngValue]="banda.id">{{ banda.nome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center" *ngIf="selectedBandaId !== null">
+    <div class="col-md-6">
+      <label for="selectAlbum">Álbum:</label>
+      <select [(ngModel)]="selectedAlbumId" name="album" id="selectAlbum" class="form-control" (change)="onAlbumChange()">
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let album of albuns" [ngValue]="album.id">{{ album.nome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center" *ngIf="selectedAlbumId !== null">
+    <div class="col-md-6">
+      <label for="selectMusica">Música:</label>
+      <select [(ngModel)]="selectedMusicaId" name="musica" id="selectMusica" class="form-control">
+        <option [ngValue]="null">Selecione...</option>
+        <option *ngFor="let musica of musicas" [ngValue]="musica.id">{{ musica.nome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row justify-content-center" *ngIf="selectedMusicaId !== null">
+    <div class="col-md-6">
+      <label for="notaInput">Nota:</label>
+      <input type="number" [(ngModel)]="nota" min="0" max="10" placeholder="Nota (0-10)" class="form-control" id="notaInput" />
+    </div>
+  </div>
+  <br/>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <button class="btn btn-success" (click)="avaliarMusica()">Avaliar</button>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="musicas.length > 0">
+        <table class="table table-condensed table-hover">
+          <thead>
+          <tr>
+            <th>ID <span (click)="toggleSort('id')">{{ sortDirection['id'] === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Nome <span (click)="toggleSort('nome')">{{ sortDirection['nome'] === 'asc' ? '▲' : '▼' }}</span></th>
+            <th>Resumo</th>
+            <th>Duração Total</th>
+            <th>Avaliação <span (click)="toggleSort('media')">{{ sortDirection['media'] === 'asc' ? '▲' : '▼' }}</span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let musica of musicas">
+            <td>{{ musica.id }}</td>
+            <td>{{ musica.nome }}</td>
+            <td>{{ musica.resumo }}</td>
+            <td>{{ convertToHoursMinutesSeconds(musica.duracao) }}</td>
+            <td>
+              <span *ngIf="musica.media === null || musica.media === 0">Ainda não há nenhuma avaliação para esta música.</span>
+              <span *ngIf="musica.media !== null && musica.media !== 0">{{ musica.media.toFixed(2) }}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

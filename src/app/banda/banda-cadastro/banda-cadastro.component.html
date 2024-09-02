@@ -1,0 +1,67 @@
+<div class="text-center">
+  <h1 class="mt-4">Banda</h1>
+  <ol class="breadcrumb mb-4 justify-content-center">
+    <li class="breadcrumb-item active">{{ banda.id ? 'Edição' : 'Cadastro' }}</li>
+  </ol>
+</div>
+
+<div class="container">
+  <form #bandaForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success" *ngIf="success">
+          Banda {{ banda.nome }} cadastrada/atualizada com sucesso!
+        </div>
+        <div class="alert alert-danger" *ngFor="let erro of errors">
+          {{ erro }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="banda.id">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ID:</label>
+          <input class="form-control" type="text" disabled="true"
+                 [(ngModel)]="banda.id" name="id"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Nome: *</label>
+          <input class="form-control" type="text"
+                 [(ngModel)]="banda.nome" name="nome" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Resumo: *</label>
+          <textarea class="form-control" rows="5"
+                    [(ngModel)]="banda.resumo" name="resumo"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6 d-flex justify-content-center">
+        <button type="submit" class="btn btn-success mr-2" *ngIf="!banda.id">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button type="submit" class="btn btn-primary mr-2" *ngIf="banda.id">
+          <i class="fas fa-sync-alt"></i> Atualizar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="voltarParaListagem()">
+          <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
