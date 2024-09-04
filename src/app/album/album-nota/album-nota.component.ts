@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BandaService } from '../../banda.service';
-import { AlbumService } from '../../album.service';
+import { BandaService } from '../../services/banda.service';
+import { AlbumService } from '../../services/album.service';
 import { Banda } from "../../banda/banda";
 import { Album } from "../album";
 import { AlbumResponseDTO } from "../album-response-dto";
@@ -112,6 +112,7 @@ export class AlbumNotaComponent implements OnInit {
   }
 
   getAlbuns(): void {
+    // this.mensagemErro = null;
     if (this.selectedBandaId !== null) {
       this.albumService.getAlbunsByBandaId(this.selectedBandaId).subscribe(
         (response: AlbumResponseDTO[]) => {
@@ -119,7 +120,7 @@ export class AlbumNotaComponent implements OnInit {
         },
         (error: any) => {
           //console.error('Erro ao carregar álbuns:', error);
-          this.mensagemErro = 'Erro ao carregar álbuns.';
+          this.mensagemErro = 'Não há álbuns cadastrados para esta banda.';
         }
       );
     }

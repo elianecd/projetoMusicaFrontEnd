@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Album} from "./album/album";
-import {environment} from "../environments/environment";
+import {Album} from "../album/album";
+import {environment} from "../../environments/environment";
 import {map, Observable} from "rxjs";
-import {AlbumResponseDTO} from "./album/album-response-dto";
-import {MusicaResponseDTO} from "./album/musica-response-dto";
+import {AlbumResponseDTO} from "../album/album-response-dto";
+import {MusicaResponseDTO} from "../album/musica-response-dto";
 
 @Injectable({
   providedIn: 'root'

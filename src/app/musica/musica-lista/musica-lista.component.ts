@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicaService } from "../../musica.service";
-import { BandaService } from "../../banda.service";
-import { AlbumService } from "../../album.service";
+import { MusicaService } from "../../services/musica.service";
+import { BandaService } from "../../services/banda.service";
+import { AlbumService } from "../../services/album.service";
 import { Musica } from "../musica";
 import { ActivatedRoute, Router } from "@angular/router";
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BandaService } from '../../banda.service';
-import { AlbumService } from '../../album.service';
-import { MusicaService } from '../../musica.service';
+import { BandaService } from '../../services/banda.service';
+import { AlbumService } from '../../services/album.service';
+import { MusicaService } from '../../services/musica.service';
 import { Banda } from '../../banda/banda';
 import { Album } from '../../album/album';
 import { Musica } from '../../musica/musica';
@@ -100,24 +100,50 @@ export class MusicaNotaComponent implements OnInit {
     }
   }
 
+  //aqui é a filtragem de albuns para avaliacao de musicas
   getAlbuns(): void {
+    this.mensagemErro = '';
+
     if (this.selectedBandaId !== null) {
       this.albumService.getAlbunsByBandaId(this.selectedBandaId).subscribe(
         (response: AlbumResponseDTO[]) => {
           this.albuns = response.map(dto => this.albumService.convertToAlbum(dto));
         },
         (error: any) => {
-          this.mensagemErro = 'Erro ao carregar álbuns.';
+          this.mensagemErro = 'Não há álbuns cadastrados para esta banda.';
         }
       );
     }
   }
 
+  // getMusicas(): void {
+  //   if (this.selectedAlbumId !== null) {
+  //     this.musicaService.getMusicasByAlbumId(this.selectedAlbumId).subscribe(
+  //       (response: MusicaResponseDTO[]) => {
+  //         this.musicas = response.map(dto => this.musicaService.convertToMusica(dto));
+  //       },
+  //       (error: any) => {
+  //         console.error('Erro ao carregar músicas:', error);
+  //         this.mensagemErro = 'Erro ao carregar músicas. Verifique o console para mais detalhes.';
+  //       }
+  //     );
+  //   } else {
+  //     this.mensagemErro = 'Nenhum álbum selecionado.';
+  //   }
+  // }
+
   getMusicas(): void {
+    this.mensagemErro = null;
+    this.musicas = [];
+
     if (this.selectedAlbumId !== null) {
       this.musicaService.getMusicasByAlbumId(this.selectedAlbumId).subscribe(
         (response: MusicaResponseDTO[]) => {
-          this.musicas = response.map(dto => this.musicaService.convertToMusica(dto));
+          if (response.length === 0) {
+            this.mensagemErro = 'Não há músicas cadastradas para o álbum desta banda.';
+          } else {
+            this.musicas = response.map(dto => this.musicaService.convertToMusica(dto));
+          }
         },
         (error: any) => {
           console.error('Erro ao carregar músicas:', error);

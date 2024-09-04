@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Banda} from "../../banda/banda";
-import {BandaService} from "../../banda.service";
-import {AlbumService} from "../../album.service";
+import {BandaService} from "../../services/banda.service";
+import {AlbumService} from "../../services/album.service";
 import {Album} from "../album";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -69,6 +69,7 @@ export class AlbumCadastroComponent implements OnInit {
           next: (response: Album) => {
             this.success = true;
             this.errors = [];
+            this.router.navigate(['/album-lista']);
           },
           error: (errorResponse: any) => {
             this.errors = ['Erro ao atualizar o álbum.'];
@@ -79,8 +80,10 @@ export class AlbumCadastroComponent implements OnInit {
         this.service.salvar(this.album, bandaId).subscribe({
           next: (savedAlbum: Album) => {
             this.success = true;
+            //console.log('Success flag set to true');
             this.errors = [];
-            this.router.navigate(['/album-cadastro', savedAlbum.id]);
+            // this.router.navigate(['/album-cadastro', savedAlbum.id]);
+            this.router.navigate(['/album-lista']);
           },
           error: (errorResponse: any) => {
             this.success = false;

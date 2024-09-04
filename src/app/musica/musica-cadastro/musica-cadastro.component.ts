@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MusicaService} from '../../musica.service';
-import {BandaService} from '../../banda.service';
-import {AlbumService} from '../../album.service';
+import {MusicaService} from '../../services/musica.service';
+import {BandaService} from '../../services/banda.service';
+import {AlbumService} from '../../services/album.service';
 import {Musica} from '../musica';
 import {Banda} from '../../banda/banda';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -44,7 +44,7 @@ export class MusicaCadastroComponent implements OnInit {
         this.bandas = resposta.sort((a, b) => a.nome.localeCompare(b.nome));
       },
       (error: any) => {
-        this.errors = ['Erro ao carregar a lista de bandas.'];
+        this.errors = ['Não há bandas cadastradas.'];
       }
     );
 
@@ -65,6 +65,8 @@ export class MusicaCadastroComponent implements OnInit {
   }
 
   onBandaChange(): void {
+    this.errors = [];
+
     if (this.selectedBandaId) {
       this.albumService.getAlbunsByBandaId(this.selectedBandaId).subscribe(
         (resposta: AlbumResponseDTO[]) => {
@@ -78,7 +80,7 @@ export class MusicaCadastroComponent implements OnInit {
           })).sort((a, b) => a.nome.localeCompare(b.nome));
         },
         (error: any) => {
-          this.errors = ['Erro ao carregar a lista de álbuns.'];
+          this.errors = ['Não há álbuns cadastrados para esta banda.'];
         }
       );
     } else {

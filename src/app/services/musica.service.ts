@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Musica} from "./musica/musica";
-import {environment} from "../environments/environment";
-import {MusicaResponseDTO} from "./musica/musica-response-dto";
+import {Musica} from "../musica/musica";
+import {environment} from "../../environments/environment";
+import {MusicaResponseDTO} from "../musica/musica-response-dto";
 
 @Injectable({
   providedIn: 'root'

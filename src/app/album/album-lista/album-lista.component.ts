@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlbumService } from '../../album.service';
+import { AlbumService } from '../../services/album.service';
 import { Banda } from '../../banda/banda';
-import { BandaService } from '../../banda.service';
+import { BandaService } from '../../services/banda.service';
 import { Album } from '../album';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumResponseDTO } from '../album-response-dto';
@@ -49,7 +49,7 @@ export class AlbumListaComponent implements OnInit {
           this.albuns = response.map(dto => this.albumService.convertToAlbum(dto));
         },
         (error: any) => {
-          this.message = 'Erro ao carregar álbuns.';
+          this.message = 'Não há álbuns cadastradss para esta banda.';
         }
       );
     } else {
@@ -101,10 +101,25 @@ export class AlbumListaComponent implements OnInit {
         this.albuns = response.map(dto => this.albumService.convertToAlbum(dto));
       },
       (error: any) => {
-        this.message = 'Erro ao carregar álbuns.';
+        this.message = 'Não há músicas cadastradas para o álbum desta banda.';
       }
     );
   }
+
+  // getAlbunsByBandaId(bandaId: number): void {
+  //   this.albumService.getAlbunsByBandaId(bandaId).subscribe(
+  //     (response: AlbumResponseDTO[]) => {
+  //       if (response.length === 0) {
+  //         this.message = 'Não há álbuns cadastrados para esta banda.';
+  //       } else {
+  //         this.albuns = response.map(dto => this.albumService.convertToAlbum(dto));
+  //       }
+  //     },
+  //     (error: any) => {
+  //       this.message = 'Erro ao buscar álbuns para esta banda.';
+  //     }
+  //   );
+  // }
 
   convertToHoursMinutesSeconds(totalSeconds: number): string {
     const hours = Math.floor(totalSeconds / 3600);

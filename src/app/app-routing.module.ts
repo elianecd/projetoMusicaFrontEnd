@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {LayoutComponent} from "./layout/layout.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HomeComponent} from "./pages/home/home.component";
+import {LayoutComponent} from "./pages/layout/layout.component";
 import {BandaCadastroComponent} from "./banda/banda-cadastro/banda-cadastro.component";
 import {BandaListaComponent} from "./banda/banda-lista/banda-lista.component";
 import {BandaNotaComponent} from "./banda/banda-nota/banda-nota.component";
@@ -11,8 +11,18 @@ import {AlbumNotaComponent} from "./album/album-nota/album-nota.component";
 import {MusicaCadastroComponent} from "./musica/musica-cadastro/musica-cadastro.component";
 import {MusicaListaComponent} from "./musica/musica-lista/musica-lista.component";
 import {MusicaNotaComponent} from "./musica/musica-nota/musica-nota.component";
+import {LoginComponent} from "./pages/login/login.component";
 
 const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
   { path: '', component: LayoutComponent, children: [
       { path: 'home', component: HomeComponent },
       { path: 'banda-cadastro', component: BandaCadastroComponent },
@@ -26,7 +36,6 @@ const routes: Routes = [
       { path: 'album-lista/:id', component: AlbumListaComponent },
       { path: 'album-nota', component: AlbumNotaComponent },
       { path: 'album-nota/:id', component: BandaNotaComponent },
-      // { path: 'musicas', loadChildren: () => import('./musica/musica.module').then(m => m.MusicaModule) },
       { path: 'musica-cadastro', component: MusicaCadastroComponent },
       { path: 'musica-cadastro/:id', component: MusicaCadastroComponent },
       { path: 'musica-cadastro/:bandaId', component: MusicaCadastroComponent },
@@ -42,11 +51,13 @@ const routes: Routes = [
       { path: 'musica-nota/:id', component: MusicaNotaComponent },
       { path: 'musica-nota/album/:id', component: MusicaNotaComponent },
       { path: 'musicas/novo-registro/:bandaId/:albumId', component: MusicaCadastroComponent },
-
       //{ path: 'musica-nota/:id/avaliar-musica', component: MusicaNotaComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirecionar para /home por padrão
-      // { path: '**', redirectTo: 'home', pathMatch: 'full' } // Redirecionar qualquer rota não encontrada para /home
     ]},
+  {
+    path: '**',
+    component: LoginComponent
+  }
 ];
 
 @NgModule({

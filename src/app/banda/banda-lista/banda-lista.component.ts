@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Banda} from "../banda";
-import {BandaService} from "../../banda.service";
+import {BandaService} from "../../services/banda.service";
 import {Router} from "@angular/router";
 
 @Component({
